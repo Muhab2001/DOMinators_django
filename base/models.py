@@ -27,6 +27,11 @@ class Club(models.Model):
     header_image = models.URLField(_("header image"), blank=True)
     description = models.TextField(_("description"))
     theme = models.CharField(_("theme"), max_length=10)
+    twitter_link = models.URLField(_("twitter link"), blank=True)
+
+    president = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name=_("president")
+    )
 
 
 @receiver(post_save, sender=User)
