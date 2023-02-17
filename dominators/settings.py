@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "base",
     "activity",
     "budget",
+    "member",
 ]
 
 MIDDLEWARE = [

@@ -2,8 +2,6 @@
     - Activiy
 """
 
-import enum
-
 from django.db import models
 from django.db.models.query import django
 from django.dispatch import receiver

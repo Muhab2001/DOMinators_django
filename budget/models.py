@@ -28,3 +28,5 @@ class Invoice(models.Model):
     description = models.CharField(_("description"), max_length=200)
     updated_on = models.DateTimeField(_("updated_on"), auto_now=True)
     added_on = models.DateTimeField(_("added on"), auto_now_add=True)
+
+    club = models.ForeignKey(Club, on_delete=models.CASCADE, verbose_name=_("club"))
