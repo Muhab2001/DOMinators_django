@@ -28,7 +28,7 @@ class Club(models.Model):
     theme = models.CharField(_("theme"), max_length=10)
     twitter_link = models.URLField(_("twitter link"), blank=True)
 
-    president = models.ForeignKey(
+    president = models.OneToOneField(
         User, on_delete=models.CASCADE, verbose_name=_("president")
     )
 

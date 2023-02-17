@@ -4,13 +4,9 @@ All models related to club's budget,
 """
 
 from django.db import models
-from django.db.models.query import django
-from django.dispatch import receiver
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
 from django.utils.translation import gettext as _
 
-from base.models import Club
+from activity.models import Activity
 
 
 class Invoice(models.Model):
@@ -29,4 +25,6 @@ class Invoice(models.Model):
     updated_on = models.DateTimeField(_("updated_on"), auto_now=True)
     added_on = models.DateTimeField(_("added on"), auto_now_add=True)
 
-    club = models.ForeignKey(Club, on_delete=models.CASCADE, verbose_name=_("club"))
+    activity = models.ForeignKey(
+        Activity, on_delete=models.CASCADE, verbose_name=_("activity")
+    )

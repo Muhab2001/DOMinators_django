@@ -6,7 +6,7 @@ from . import views
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
-router.register("invoices", views.InvoiceViewSet)
+router.register("invoices", views.InvoiceViewSet, basename="invoice")
 
 urlpatterns = [
     path("", include(router.urls)),
