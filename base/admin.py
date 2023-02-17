@@ -1,5 +1,11 @@
 from django.contrib import admin
-from .models import UserProfile
+from .models import UserProfile, Club
+
+admin.site.register(
+    [
+        Club,
+    ]
+)
 
 
 @admin.register(UserProfile)

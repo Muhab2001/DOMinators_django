@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.query import django
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -12,6 +13,20 @@ class UserProfile(models.Model):
 
     # Connect to the django User object by on-to-one relation
     user = models.OneToOneField(User, verbose_name=_("user"), on_delete=models.CASCADE)
+
+
+class Club(models.Model):
+    """A model represetns a club entity; its logo, header, name etc."""
+
+    class Meta:
+        verbose_name = _("club")
+        verbose_name_plural = _("clubs")
+
+    name = models.CharField(_("name"), max_length=50)
+    logo = models.URLField(_("logo"), blank=True)
+    header_image = models.URLField(_("header image"), blank=True)
+    description = models.TextField(_("description"))
+    theme = models.CharField(_("theme"), max_length=10)
 
 
 @receiver(post_save, sender=User)
