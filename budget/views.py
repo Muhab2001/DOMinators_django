@@ -1,3 +1,14 @@
-from django.shortcuts import render
+from django.contrib.auth.models import User
+from rest_framework import serializers, viewsets
+from . import models
 
-# Create your views here.
+# Serializers define the API representation.
+class InvoiceSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = models.Invoice
+        fields = "__all__"
+
+
+class InvoiceViewSet(viewsets.ModelViewSet):
+    queryset = models.Invoice.objects.all()
+    serializer_class = InvoiceSerializer
