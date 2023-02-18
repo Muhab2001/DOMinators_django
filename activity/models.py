@@ -2,6 +2,7 @@
     - Activiy
 """
 
+from cloudinary.models import CloudinaryField
 from django.db import models
 from django.db.models.query import django
 from django.dispatch import receiver
@@ -26,6 +27,9 @@ class Activity(models.Model):
     front_image = models.URLField(_("front image"), blank=True)
     attendance_max = models.IntegerField(_("attendance max"))
     description = models.TextField(_("description"))
+    image = CloudinaryField(
+        _("image"), default="image/upload/v1676716777/qe8vfjfudtc8pti3iz3l.png"
+    )
 
     club = models.ForeignKey(Club, on_delete=models.CASCADE, verbose_name="club")
     supervisor = models.ForeignKey(
