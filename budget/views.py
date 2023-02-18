@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import permissions
 from rest_framework import serializers, viewsets
+import rest_framework
 from rest_framework.permissions import IsAuthenticated
 
 from . import models
@@ -18,15 +19,21 @@ class IsPresidentOrReadOnly(permissions.BasePermission):
             return True
 
         # permissions are only allowed to the president of the invoice's club.
-        return obj.club.president == request.user
+        return obj.activity.club.president == request.user
 
 
 # Serializers define the API representation.
-class InvoiceSerializer(serializers.HyperlinkedModelSerializer):
+class InvoiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Invoice
         fields = "__all__"
-        read_only_fields = ["club"]
+
+    def to_representation(self, instance):
+        result = super().to_representation(instance)
+        result["club"] = instance.activity.club.name
+        result["supervisor"] = instance.activity.supervisor.username
+
+        return result
 
 
 class InvoiceViewSet(viewsets.ModelViewSet):
@@ -34,4 +41,4 @@ class InvoiceViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsPresidentOrReadOnly]
 
     def get_queryset(self):
-        return [obj.invoice_set for obj in self.request.user.club.activity_set]
+        return [obj.invoice_set for obj in self.request.user.club.activity_set.all()]

@@ -24,5 +24,5 @@ class ActivityViewSet(viewsets.ModelViewSet):
 
 
 class RegistrationViewSet(viewsets.ModelViewSet):
-    queryset = models.Activity.objects.all()
+    queryset = models.Registration.objects.all()
     serializer_class = RegistrationSerializer

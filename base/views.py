@@ -1,5 +1,6 @@
 import cloudinary
 from django.contrib.auth.models import User
+from rest_framework.views import APIView, Response
 from rest_framework import serializers, viewsets
 from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
 from cloudinary.uploader import upload
@@ -46,17 +47,17 @@ class IsPresidentOrReadOnly(BasePermission):
 
 
 # Serializers define the API representation.
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["url", "username", "email", "is_staff"]
+        fields = ["pk", "username", "email", "is_staff"]
 
 
 class ClubSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Club
         fields = "__all__"
-        read_only_fields = ["president", "image"]
+        read_only_fields = ["president"]
 
     def to_representation(self, instance):
         count = 0
@@ -77,11 +78,31 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = models.UserProfile
         fields = "__all__"
 
+    def to_representation(self, instance):
+        result = super().to_representation(instance)
+        result["profile_pic"] = instance.profile_pic.url
+
+        return result
+
+
+class MeUserView(APIView):
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
+
 
 # ViewSets define the view behavior.
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    def get_object(self):
+        pk = self.kwargs.get("pk")
+
+        if pk == "current":
+            return self.request.user
+
+        return super().get_object()
 
 
 class ClubViewSet(viewsets.ModelViewSet):

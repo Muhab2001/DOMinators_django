@@ -13,6 +13,10 @@ class UserProfile(models.Model):
 
     # Connect to the django User object by on-to-one relation
     user = models.OneToOneField(User, verbose_name=_("user"), on_delete=models.CASCADE)
+    profile_pic = CloudinaryField(
+        _("profile picture"),
+        default="image/upload/v1676716777/qe8vfjfudtc8pti3iz3l.png",
+    )
 
 
 class Club(models.Model):
@@ -31,7 +35,9 @@ class Club(models.Model):
     )
     description = models.TextField(_("description"))
     theme = models.CharField(_("theme"), max_length=10)
-    twitter_link = models.URLField(_("twitter link"), blank=True)
+    twitter_link = models.URLField(_("twitter link"), blank=True, default="")
+    facebook_link = models.URLField(_("twitter link"), blank=True, default="")
+    instagram_link = models.URLField(_("twitter link"), blank=True, default="")
 
     president = models.OneToOneField(
         User, on_delete=models.CASCADE, verbose_name=_("president")
