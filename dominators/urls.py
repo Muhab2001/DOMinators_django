@@ -36,6 +36,7 @@ router.register("registrations", activity.views.RegistrationViewSet)
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include(router.urls)),
+    path("api/club_activities/<int:pk>", activity.views.ClubActivityView.as_view()),
     path("api/me/", base.views.MeUserView.as_view()),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
 ]

@@ -41,4 +41,10 @@ class InvoiceViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, IsPresidentOrReadOnly]
 
     def get_queryset(self):
-        return [obj.invoice_set for obj in self.request.user.club.activity_set.all()]
+        all_invoices = []
+        print(self.request.user.club.activity_set.all())
+
+        for activity in self.request.user.club.activity_set.all():
+            all_invoices.extend(activity.invoice_set.all())
+
+        return all_invoices
