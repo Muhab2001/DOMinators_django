@@ -19,6 +19,7 @@ class Committee(models.Model):
         verbose_name = _("committee")
         verbose_name_plural = _("committees")
 
+    name = models.CharField(_("name"), max_length=100, default="")
     club = models.ForeignKey(Club, on_delete=models.CASCADE, verbose_name=_("club"))
     updated_on = models.DateTimeField(_("updated_on"), auto_now=True)
     supervisor = models.ForeignKey(

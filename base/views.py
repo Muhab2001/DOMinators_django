@@ -59,8 +59,15 @@ class ClubSerializer(serializers.ModelSerializer):
         read_only_fields = ["president", "image"]
 
     def to_representation(self, instance):
+        count = 0
+        for committee in instance.committee_set.all():
+            count += committee.membership_set.count()
+
         result = super().to_representation(instance)
-        result["image"] = instance.image.url
+        result["logo"] = instance.logo.url
+        result["header_image"] = instance.header_image.url
+        result["activity_count"] = instance.activity_set.count()
+        result["member_count"] = count
 
         return result
 
@@ -84,8 +91,10 @@ class ClubViewSet(viewsets.ModelViewSet):
 
     def perform_update(self, serializer):
         if serializer.context["request"].FILES:
-            file = serializer.context["request"].FILES["file"]
-            serializer.validated_data["image"] = file
+            file1 = serializer.context["request"].FILES["file1"]
+            file2 = serializer.context["request"].FILES["file2"]
+            serializer.validated_data["logo"] = file1
+            serializer.validated_data["header_image"] = file2
 
         super().perform_update(serializer)
 
