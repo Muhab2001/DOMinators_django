@@ -31,6 +31,7 @@ router.register("users", base.views.UserViewSet)
 router.register("clubs", base.views.ClubViewSet)
 router.register("user_profile", base.views.ClubViewSet)
 router.register("activities", activity.views.ActivityViewSet)
+router.register("registrations", activity.views.RegistrationViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),

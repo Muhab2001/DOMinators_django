@@ -12,6 +12,17 @@ class ActivitySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class RegistrationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Registration
+        fields = "__all__"
+
+
 class ActivityViewSet(viewsets.ModelViewSet):
     queryset = models.Activity.objects.all()
     serializer_class = ActivitySerializer
+
+
+class RegistrationViewSet(viewsets.ModelViewSet):
+    queryset = models.Activity.objects.all()
+    serializer_class = RegistrationSerializer
