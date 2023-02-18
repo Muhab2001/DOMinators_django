@@ -8,6 +8,8 @@ django = "*"
 djangorestframework = "*"
 markdown = "*"
 django-filter = "*"
+cloudinary = "*"
+python-dotenv = "*"
 
 [dev-packages]
 black = "*"

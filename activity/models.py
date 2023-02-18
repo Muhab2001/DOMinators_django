@@ -27,8 +27,9 @@ class Activity(models.Model):
     attendance_max = models.IntegerField(_("attendance max"))
     description = models.TextField(_("description"))
 
+    club = models.ForeignKey(Club, on_delete=models.CASCADE, verbose_name="club")
     supervisor = models.ForeignKey(
-        Club, on_delete=models.CASCADE, verbose_name="supervisor"
+        User, on_delete=models.CASCADE, verbose_name="supervisor"
     )
 
 

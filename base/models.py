@@ -3,6 +3,7 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.utils.translation import gettext as _
+from cloudinary.models import CloudinaryField
 
 
 class UserProfile(models.Model):
@@ -27,6 +28,7 @@ class Club(models.Model):
     description = models.TextField(_("description"))
     theme = models.CharField(_("theme"), max_length=10)
     twitter_link = models.URLField(_("twitter link"), blank=True)
+    image = CloudinaryField(default="")
 
     president = models.OneToOneField(
         User, on_delete=models.CASCADE, verbose_name=_("president")
