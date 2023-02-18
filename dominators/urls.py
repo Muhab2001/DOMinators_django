@@ -15,14 +15,25 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-import base.urls
-import member.urls
-import budget.urls
+from rest_framework import routers
+
+import base.views
+import member.views
+import budget.views
+import activity.views
+
+router = routers.DefaultRouter()
+
+router.register("meberships", member.views.MembershipViewSet)
+router.register("committees", member.views.CommitteeViewSet)
+router.register("invoices", budget.views.InvoiceViewSet, basename="invoice")
+router.register("users", base.views.UserViewSet)
+router.register("clubs", base.views.ClubViewSet)
+router.register("user_profile", base.views.ClubViewSet)
+router.register("activities", activity.views.ActivityViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("base/", include(base.urls)),
-    path("member/", include(member.urls)),
-    path("budget/", include(budget.urls)),
+    path("api/", include(router.urls)),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
 ]
