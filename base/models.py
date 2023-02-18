@@ -23,12 +23,15 @@ class Club(models.Model):
         verbose_name_plural = _("clubs")
 
     name = models.CharField(_("name"), max_length=50)
-    logo = models.URLField(_("logo"), blank=True)
-    header_image = models.URLField(_("header image"), blank=True)
+    logo = CloudinaryField(
+        _("logo"), default="image/upload/v1676716777/qe8vfjfudtc8pti3iz3l.png"
+    )
+    header_image = CloudinaryField(
+        _("header image"), default="image/upload/v1676716777/qe8vfjfudtc8pti3iz3l.png"
+    )
     description = models.TextField(_("description"))
     theme = models.CharField(_("theme"), max_length=10)
     twitter_link = models.URLField(_("twitter link"), blank=True)
-    image = CloudinaryField(default="")
 
     president = models.OneToOneField(
         User, on_delete=models.CASCADE, verbose_name=_("president")
